@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-"""
+r"""
 _______________________    _________________________________________
 __  __ \__  /____  _/_ |  / /__    |__  __ \___  _/_  ____/__  ____/
 _  / / /_  /  __  / __ | / /__  /| |_  / / /__  / _  /    __  __/
@@ -10,11 +10,10 @@ _  / / /_  /  __  / __ | / /__  /| |_  / / /__  / _  /    __  __/
 @Author    :   lunzhiPenxil仑质
 @Contact   :   lunzhipenxil@gmail.com
 @License   :   AGPL
-@Copyright :   (C) 2020-2021, OlivOS-Team
+@Copyright :   (C) 2020-2026, OlivOS-Team
 @Desc      :   None
 """
 
-import OlivOS
 import OlivaDiceCore
 import OlivaDiceLogger
 
@@ -104,7 +103,7 @@ def init_logger(plugin_event, Proc):
         OlivOSOnebotV11.eventRouter.txEvent.doRouter = add_logger_lazy_reply_func(
             OlivOSOnebotV11.eventRouter.txEvent.doRouter
         )
-    except Exception as e:
+    except Exception:
         traceback.print_exc()
 
 
@@ -134,7 +133,7 @@ def add_logger_lazy_reply_func(target_func):
         res = target_func(self_arg)
         try:
             loggerEntryLazyReply(self_arg)
-        except Exception as e:
+        except Exception:
             traceback.print_exc()
         return res
 
@@ -184,7 +183,7 @@ def loggerEntryLazyReply(self_arg):
             and tmp_message is not None
         ):
             loggerEntry(tmp_event, tmp_funcType, tmp_sender, tmp_dectData, tmp_message)
-    except Exception as e:
+    except Exception:
         traceback.print_exc()
 
 
@@ -198,7 +197,7 @@ def handle_message_recall(event):
             import OlivOSOnebotV11
 
             host_id = OlivOSOnebotV11.eventRouter.getHostIdDict(botHash=botHash, groupId=group_id)
-        except Exception as e:
+        except Exception:
             host_id = None
         tmp_hagID = f'{host_id}|{group_id}' if host_id else str(group_id)
 
@@ -259,7 +258,7 @@ def handle_message_recall(event):
                 with open(log_file, 'w', encoding='utf-8') as f:
                     f.writelines(updated_lines)
 
-    except Exception as e:
+    except Exception:
         traceback.print_exc()
 
 
@@ -295,7 +294,7 @@ def get_log_lines(log_name):
         with open(dataLogFile, 'r', encoding='utf-8') as f:
             lines = f.readlines()
             return len(lines)
-    except:
+    except Exception:
         return 0
 
 
@@ -310,9 +309,9 @@ def check_log_file_exists(log_name):
 def loggerEntry(event, funcType, sender, dectData, message):
     [host_id, group_id, user_id] = dectData
     tmp_hagID = None
-    if host_id != None and group_id != None:
+    if host_id is not None and group_id is not None:
         tmp_hagID = '%s|%s' % (str(host_id), str(group_id))
-    elif group_id != None:
+    elif group_id is not None:
         tmp_hagID = str(group_id)
     tmp_name = 'N/A'
     tmp_id = -1
@@ -354,7 +353,7 @@ def loggerEntry(event, funcType, sender, dectData, message):
                     tmp_pc_name = OlivaDiceCore.pcCard.pcCardDataGetSelectionKey(tmp_pcHash, hagId=tmp_hagID)
                     if tmp_pc_name:
                         tmp_name = tmp_pc_name
-                except Exception as e:
+                except Exception:
                     pass
 
             log_dict = {
@@ -420,7 +419,7 @@ def init_log_file(logName):
                         if log_entry.get('type') == 'log_total_duration':
                             has_duration = True
                             break
-                    except:
+                    except Exception:
                         continue
             # 如果没有duration记录,在开头添加
             if not has_duration:
@@ -433,7 +432,7 @@ def init_log_file(logName):
                     with open(dataLogFile, 'w', encoding='utf-8') as f:
                         f.write(json.dumps(total_record, ensure_ascii=False) + '\n')
                         f.write(existing_content)
-    except Exception as e:
+    except Exception:
         traceback.print_exc()
 
 
@@ -463,7 +462,7 @@ def update_log_total_duration(dataLogFile, total_duration):
                 updated_lines.insert(0, json.dumps(total_record, ensure_ascii=False) + '\n')
             with open(dataLogFile, 'w', encoding='utf-8') as f:
                 f.writelines(updated_lines)
-    except Exception as e:
+    except Exception:
         traceback.print_exc()
 
 
@@ -491,7 +490,7 @@ def releaseLogFile(logName, total_duration=0, temp=False):
                 tmp_dataLog_json = None
                 try:
                     tmp_dataLog_json = json.loads(tmp_dataLogFile_list_this)
-                except:
+                except Exception:
                     tmp_dataLog_json = None
                 if tmp_dataLog_json:
                     # 跳过已删除消息和总时长记录
@@ -508,7 +507,7 @@ def releaseLogFile(logName, total_duration=0, temp=False):
             with open(dataLogFile_1, 'w+', encoding='utf-8') as dataLogFile_f:
                 dataLogFile_f.write(res_logFile_str)
             return True
-    except Exception as e:
+    except Exception:
         traceback.print_exc()
         return False
     return False
@@ -517,7 +516,7 @@ def releaseLogFile(logName, total_duration=0, temp=False):
 def uploadLogFile(logName, timeout=60):
     dataPath = OlivaDiceLogger.data.dataPath
     dataLogPath = OlivaDiceLogger.data.dataLogPath
-    dataLogFile = '%s%s/%s.olivadicelog' % (dataPath, dataLogPath, logName)
+    dataLogFile = '%s%s/%s.olivadicelog' % (dataPath, dataLogPath, logName)  # NOQA: F841
     dataLogFile_1 = '%s%s/%s.trpglog' % (dataPath, dataLogPath, logName)
     tmp_dataLogFile = None
     with open(dataLogFile_1, 'rb') as dataLogFile_f:
@@ -525,7 +524,7 @@ def uploadLogFile(logName, timeout=60):
         url = OlivaDiceLogger.data.dataLogUpload
         files = {'file': tmp_dataLogFile}
         data = {'name': logName}
-        response = req.request(
+        response = req.request(  # NOQA: F841
             'POST', url, files=files, data=data, proxies=OlivaDiceCore.webTool.get_system_proxy(), timeout=timeout
         )
 
@@ -546,9 +545,9 @@ def get_last_message_id(log_file_path):
                         log_entry = json.loads(line.strip())
                         if not log_entry.get('deleted', False) and 'message_id' in log_entry:
                             last_message_id = log_entry['message_id']
-                    except:
+                    except Exception:
                         continue
-        except:
+        except Exception:
             pass
     return last_message_id
 
@@ -562,7 +561,7 @@ def write_status_to_file(log_uuid, status_data):
         with open(status_file, 'w', encoding='utf-8') as f:
             json.dump(status_data, f, ensure_ascii=False, indent=2)
         return True
-    except Exception as e:
+    except Exception:
         traceback.print_exc()
         return False
 
@@ -577,7 +576,7 @@ def read_status_from_file(log_uuid):
             with open(status_file, 'r', encoding='utf-8') as f:
                 return json.load(f)
         return None
-    except Exception as e:
+    except Exception:
         traceback.print_exc()
         return None
 

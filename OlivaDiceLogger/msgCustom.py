@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-"""
+r"""
 _______________________    _________________________________________
 __  __ \__  /____  _/_ |  / /__    |__  __ \___  _/_  ____/__  ____/
 _  / / /_  /  __  / __ | / /__  /| |_  / / /__  / _  /    __  __/
@@ -10,13 +10,9 @@ _  / / /_  /  __  / __ | / /__  /| |_  / / /__  / _  /    __  __/
 @Author    :   lunzhiPenxil仑质
 @Contact   :   lunzhipenxil@gmail.com
 @License   :   AGPL
-@Copyright :   (C) 2020-2021, OlivOS-Team
+@Copyright :   (C) 2020-2026, OlivOS-Team
 @Desc      :   None
 """
-
-import OlivOS
-import OlivaDiceCore
-import OlivaDiceLogger
 
 dictConsoleSwitchTemplate = {'default': {'defaultLogQuote': 0, 'defaultLogUsePcName': 0, 'defaultLogUploadTimeout': 60}}
 
@@ -28,6 +24,7 @@ dictConfigKeyToConsoleSwitchMapping = {
 
 dictStrCustomDict = {}
 
+# flake8: NOQA: E501
 dictStrCustom = {
     'strLoggerLogOn': '开始记录日志 [{tLogName}] (UUID: {tLogUUID})',
     'strLoggerLogAlreadyOn': '已经正在记录日志 [{tLogName}]',
@@ -94,6 +91,7 @@ dictStrCustom = {
     'strLoggerStatUserFormat': '[{tUserName}]的数据:\n{tUserStatData}',
     'strLoggerStatUserSeparator': '\n\n',
 }
+# flake8: NOQA OFF
 
 dictStrConst = {}
 

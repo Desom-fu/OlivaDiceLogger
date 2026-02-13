@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-"""
+r"""
 _______________________    _________________________________________
 __  __ \__  /____  _/_ |  / /__    |__  __ \___  _/_  ____/__  ____/
 _  / / /_  /  __  / __ | / /__  /| |_  / / /__  / _  /    __  __/
@@ -10,7 +10,7 @@ _  / / /_  /  __  / __ | / /__  /| |_  / / /__  / _  /    __  __/
 @Author    :   lunzhiPenxil仑质
 @Contact   :   lunzhipenxil@gmail.com
 @License   :   AGPL
-@Copyright :   (C) 2020-2021, OlivOS-Team
+@Copyright :   (C) 2020-2026, OlivOS-Team
 @Desc      :   None
 """
 
@@ -19,10 +19,9 @@ import OlivaDiceLogger
 import OlivaDiceCore
 import urllib.parse
 
-import hashlib
 import time
 import os
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone
 import uuid
 import json
 import glob
@@ -57,17 +56,17 @@ def unity_reply(plugin_event, Proc):
     skipToRight = OlivaDiceCore.msgReply.skipToRight
     msgIsCommand = OlivaDiceCore.msgReply.msgIsCommand
 
-    tmp_at_str = OlivOS.messageAPI.PARA.at(plugin_event.base_info['self_id']).CQ()
+    tmp_at_str = OlivOS.messageAPI.PARA.at(plugin_event.base_info['self_id']).CQ()  # NOQA: F841
     tmp_id_str = str(plugin_event.base_info['self_id'])
     tmp_at_str_sub = None
     tmp_id_str_sub = None
     if 'sub_self_id' in plugin_event.data.extend:
-        if plugin_event.data.extend['sub_self_id'] != None:
-            tmp_at_str_sub = OlivOS.messageAPI.PARA.at(plugin_event.data.extend['sub_self_id']).CQ()
+        if plugin_event.data.extend['sub_self_id'] is not None:
+            tmp_at_str_sub = OlivOS.messageAPI.PARA.at(plugin_event.data.extend['sub_self_id']).CQ()  # NOQA: F841
             tmp_id_str_sub = str(plugin_event.data.extend['sub_self_id'])
-    tmp_command_str_1 = '.'
-    tmp_command_str_2 = '。'
-    tmp_command_str_3 = '/'
+    tmp_command_str_1 = '.'  # NOQA: F841
+    tmp_command_str_2 = '。'  # NOQA: F841
+    tmp_command_str_3 = '/'  # NOQA: F841
     tmp_reast_str = plugin_event.data.message
     flag_force_reply = False
     flag_is_command = False
@@ -76,7 +75,7 @@ def unity_reply(plugin_event, Proc):
     flag_is_from_group_admin = False
     flag_is_from_group_sub_admin = False
     flag_is_from_group_have_admin = False
-    flag_is_from_master = False
+    flag_is_from_master = False  # NOQA: F841
     if isMatchWordStart(tmp_reast_str, '[CQ:reply,id='):
         tmp_reast_str = skipToRight(tmp_reast_str, ']')
         tmp_reast_str = tmp_reast_str[1:]
@@ -110,7 +109,7 @@ def unity_reply(plugin_event, Proc):
     if flag_is_command:
         tmp_hagID = None
         if plugin_event.plugin_info['func_type'] == 'group_message':
-            if plugin_event.data.host_id != None:
+            if plugin_event.data.host_id is not None:
                 flag_is_from_host = True
             flag_is_from_group = True
         elif plugin_event.plugin_info['func_type'] == 'private_message':
@@ -121,12 +120,12 @@ def unity_reply(plugin_event, Proc):
             tmp_hagID = str(plugin_event.data.group_id)
         if flag_is_from_group:
             if 'role' in plugin_event.data.sender:
-                flag_is_from_group_have_admin = True
+                flag_is_from_group_have_admin = True  # NOQA: F841
                 if plugin_event.data.sender['role'] in ['owner', 'admin']:
                     flag_is_from_group_admin = True
                 elif plugin_event.data.sender['role'] in ['sub_admin']:
-                    flag_is_from_group_admin = True
-                    flag_is_from_group_sub_admin = True
+                    flag_is_from_group_admin = True  # NOQA: F841
+                    flag_is_from_group_sub_admin = True  # NOQA: F841
         flag_hostEnable = True
         if flag_is_from_host:
             flag_hostEnable = OlivaDiceCore.userConfig.getUserConfigByKey(
@@ -574,7 +573,7 @@ def unity_reply(plugin_event, Proc):
                             )
                             reply_with_quote = f'[CQ:reply,id={last_message_id}]{tmp_reply_str_2}'
                             replyMsg(plugin_event, reply_with_quote)
-                        except:
+                        except Exception:
                             # 如果引用回复失败，抛出异常回复
                             dictTValue['tLogName'] = log_name
                             tmp_reply_str = OlivaDiceCore.msgCustomManager.formatReplySTR(
@@ -957,14 +956,14 @@ def unity_reply(plugin_event, Proc):
                                 dictStrCustom['strLoggerLogUrl'], dictTValue
                             )
                             replyMsg(plugin_event, tmp_reply_str)
-                            upload_success = True
+                            upload_success = True  # NOQA: F841
                         except (
                             requests.exceptions.Timeout,
                             requests.exceptions.ReadTimeout,
                             requests.exceptions.ConnectTimeout,
                         ):
                             # 上传超时，给出提示
-                            upload_timeout = True
+                            upload_timeout = True  # NOQA: F841
                             tmp_reply_str = OlivaDiceCore.msgCustomManager.formatReplySTR(
                                 dictStrCustom['strLoggerLogUploadTimeout'], dictTValue
                             )
@@ -1120,9 +1119,9 @@ def unity_reply(plugin_event, Proc):
                                         ensure_ascii=False,
                                     ),
                                 )
-                        except Exception as e:
+                        except Exception:
                             traceback.print_exc()
-                except Exception as e:
+                except Exception:
                     # 上传失败也要解除锁定
                     traceback.print_exc()
                 finally:
@@ -1202,7 +1201,10 @@ def unity_reply(plugin_event, Proc):
                         # if name in log_name_time_dict:
                         #     total_duration = log_name_time_dict[name]['total_time']
                         #     # 如果正在记录中，加上日志时长
-                        #     if log_name_time_dict[name]['start_time'] > 0 and log_name_time_dict[name]['end_time'] == 0:
+                        #     if (
+                        #         log_name_time_dict[name]['start_time'] > 0
+                        #         and log_name_time_dict[name]['end_time'] == 0
+                        #     ):
                         #         current_duration = time.time() - log_name_time_dict[name]['start_time']
                         #         total_duration += current_duration
                         #     time_info = f" (总时长: {OlivaDiceLogger.logger.format_duration(int(total_duration))})"
@@ -1345,18 +1347,18 @@ def unity_reply(plugin_event, Proc):
                                 os.rename(dataLogFile, error_log_file)
                                 with open(dataLogFile, 'w', encoding='utf-8') as f:
                                     f.write('{}')
-                            except Exception as e:
+                            except Exception:
                                 traceback.print_exc()
                                 log_error = True
 
-                    except Exception as e:
+                    except Exception:
                         traceback.print_exc()
                         log_error = True
                 else:
                     try:
                         with open(dataLogFile, 'w', encoding='utf-8') as f:
                             f.write('{}')
-                    except Exception as e:
+                    except Exception:
                         traceback.print_exc()
                         log_error = True
 
@@ -1600,7 +1602,7 @@ def unity_reply(plugin_event, Proc):
                                 if record.get('type') == 'log_total_duration':
                                     total_duration = record.get('total_time', 0)
                                     break
-                            except:
+                            except Exception:
                                 continue
 
                 formatted_duration = OlivaDiceLogger.logger.format_duration(int(total_duration))
@@ -1621,7 +1623,7 @@ def unity_reply(plugin_event, Proc):
                         dictStrCustom['strLoggerLogUploadSuccess'], dictTValue
                     )
                     replyMsg(plugin_event, tmp_reply_str)
-                except Exception as e:
+                except Exception:
                     dictTValue['tLogName'] = log_name
                     dictTValue['tLogUUID'] = log_uuid
                     tmp_reply_str = OlivaDiceCore.msgCustomManager.formatReplySTR(
@@ -1676,9 +1678,9 @@ def unity_reply(plugin_event, Proc):
                                     if record.get('type') == 'log_total_duration':
                                         total_duration = record.get('total_time', 0)
                                         break
-                                except:
+                                except Exception:
                                     continue
-                    except:
+                    except Exception:
                         pass
 
                 # 强制生成trpglog文件
@@ -1697,7 +1699,7 @@ def unity_reply(plugin_event, Proc):
                             dictStrCustom['strLoggerLogGenerateFailed'], dictTValue
                         )
                     replyMsg(plugin_event, tmp_reply_str)
-                except Exception as e:
+                except Exception:
                     dictTValue['tLogUUID'] = log_uuid
                     dictTValue['tLogName'] = log_name if log_name else 'N/A'
                     tmp_reply_str = OlivaDiceCore.msgCustomManager.formatReplySTR(
@@ -1799,7 +1801,7 @@ def unity_reply(plugin_event, Proc):
                         tmp_reply_str = OlivaDiceCore.msgCustomManager.formatReplySTR(
                             dictStrCustom['strLoggerLogTempSuccess'], dictTValue
                         )
-                    except Exception as e:
+                    except Exception:
                         dictTValue['tLogName'] = log_name
                         dictTValue['tLogUUID'] = tmp_log_uuid
                         tmp_reply_str = OlivaDiceCore.msgCustomManager.formatReplySTR(
@@ -2057,7 +2059,7 @@ def unity_reply(plugin_event, Proc):
                     if os.path.exists(old_file):
                         try:
                             os.rename(old_file, new_file)
-                        except Exception as e:
+                        except Exception:
                             traceback.print_exc()
 
                 dictTValue['tLogOldName'] = old_name
@@ -2192,9 +2194,9 @@ def unity_reply(plugin_event, Proc):
                 tmp_msg = OlivOS.messageAPI.Message_templet('old_string', tmp_reast_str)
                 text_parts = []
                 for item in tmp_msg.data:
-                    if type(item) == OlivOS.messageAPI.PARA.at:
+                    if type(item) is OlivOS.messageAPI.PARA.at:
                         target_user_id = item.data['id']
-                    elif type(item) == OlivOS.messageAPI.PARA.text:
+                    elif type(item) is OlivOS.messageAPI.PARA.text:
                         text = item.data['text'].strip()
                         if text:
                             text_parts.extend(text.split())
@@ -2492,7 +2494,7 @@ def unity_reply(plugin_event, Proc):
                             reply_with_quote = f'[CQ:reply,id={last_message_id}]{tmp_reply_str}'
                             replyMsg(plugin_event, reply_with_quote)
                             return
-                        except:
+                        except Exception:
                             # 如果引用回复失败，则抛出引用失败回复
                             pass
 
