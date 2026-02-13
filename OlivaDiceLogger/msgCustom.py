@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
-'''
+"""
 _______________________    _________________________________________
 __  __ \__  /____  _/_ |  / /__    |__  __ \___  _/_  ____/__  ____/
-_  / / /_  /  __  / __ | / /__  /| |_  / / /__  / _  /    __  __/   
-/ /_/ /_  /____/ /  __ |/ / _  ___ |  /_/ /__/ /  / /___  _  /___   
-\____/ /_____/___/  _____/  /_/  |_/_____/ /___/  \____/  /_____/   
+_  / / /_  /  __  / __ | / /__  /| |_  / / /__  / _  /    __  __/
+/ /_/ /_  /____/ /  __ |/ / _  ___ |  /_/ /__/ /  / /___  _  /___
+\____/ /_____/___/  _____/  /_/  |_/_____/ /___/  \____/  /_____/
 
 @File      :   msgCustom.py
 @Author    :   lunzhiPenxil仑质
@@ -12,24 +12,18 @@ _  / / /_  /  __  / __ | / /__  /| |_  / / /__  / _  /    __  __/
 @License   :   AGPL
 @Copyright :   (C) 2020-2021, OlivOS-Team
 @Desc      :   None
-'''
+"""
 
 import OlivOS
 import OlivaDiceCore
 import OlivaDiceLogger
 
-dictConsoleSwitchTemplate = {
-    'default' : {
-        'defaultLogQuote' : 0,
-        'defaultLogUsePcName' : 0,
-        'defaultLogUploadTimeout' : 60
-    }
-}
+dictConsoleSwitchTemplate = {'default': {'defaultLogQuote': 0, 'defaultLogUsePcName': 0, 'defaultLogUploadTimeout': 60}}
 
 dictConfigKeyToConsoleSwitchMapping = {
     'logQuote': 'defaultLogQuote',
     'logUsePcName': 'defaultLogUsePcName',
-    'logUploadTimeout': 'defaultLogUploadTimeout'
+    'logUploadTimeout': 'defaultLogUploadTimeout',
 }
 
 dictStrCustomDict = {}
@@ -74,14 +68,14 @@ dictStrCustom = {
     'strLoggerLogInfoNoLog': '当前没有活跃日志',
     'strLoggerLogQuote': '此处为 [{tLogName}] 日志结束消息',
     'strLoggerLogQuoteError': '[{tLogName}] 日志引用失败，可能原因是平台不为QQ或者Bot未记录上次结束日志的消息',
-    'strLoggerLogQuoteOn' : "本群已开启自动引用上次结束日志功能",
-    'strLoggerLogQuoteAlreadyOn' : "本群自动引用上次结束日志功能已处于开启状态",
-    'strLoggerLogQuoteOff' : "本群已关闭自动引用上次结束日志功能",
-    'strLoggerLogQuoteAlreadyOff' : "本群自动引用上次结束日志功能已处于关闭状态",
-    'strLoggerLogUsePcNameOn' : "本群已开启日志使用角色卡名字功能",
-    'strLoggerLogUsePcNameAlreadyOn' : "本群日志使用角色卡名字功能已处于开启状态",
-    'strLoggerLogUsePcNameOff' : "本群已关闭日志使用角色卡名字功能",
-    'strLoggerLogUsePcNameAlreadyOff' : "本群日志使用角色卡名字功能已处于关闭状态",
+    'strLoggerLogQuoteOn': '本群已开启自动引用上次结束日志功能',
+    'strLoggerLogQuoteAlreadyOn': '本群自动引用上次结束日志功能已处于开启状态',
+    'strLoggerLogQuoteOff': '本群已关闭自动引用上次结束日志功能',
+    'strLoggerLogQuoteAlreadyOff': '本群自动引用上次结束日志功能已处于关闭状态',
+    'strLoggerLogUsePcNameOn': '本群已开启日志使用角色卡名字功能',
+    'strLoggerLogUsePcNameAlreadyOn': '本群日志使用角色卡名字功能已处于开启状态',
+    'strLoggerLogUsePcNameOff': '本群已关闭日志使用角色卡名字功能',
+    'strLoggerLogUsePcNameAlreadyOff': '本群日志使用角色卡名字功能已处于关闭状态',
     'strLoggerLogStatNotFound': '未找到活跃日志',
     'strLoggerLogStatUUIDNotFound': '未找到UUID为[{tLogUUID}]的日志数据，或日志中没有任何统计数据',
     'strLoggerLogStatSelf': '日志 [{tLogName}] (UUID: {tLogUUID}) 的统计数据:\n\n[{tUserName}]的数据:\n{tStatData}\n\n总成功次数: {tTotalSuccess}\n总失败次数: {tTotalFail}\n成功率: {tSuccessRate}%',
@@ -101,11 +95,9 @@ dictStrCustom = {
     'strLoggerStatUserSeparator': '\n\n',
 }
 
-dictStrConst = {
-}
+dictStrConst = {}
 
-dictGValue = {
-}
+dictGValue = {}
 
 dictTValue = {
     'tLogName': 'N/A',
@@ -119,11 +111,11 @@ dictTValue = {
     'tStatData': 'N/A',
     'tTotalSuccess': '0',
     'tTotalFail': '0',
-    'tSuccessRate': '0.00'
+    'tSuccessRate': '0.00',
 }
 
 dictHelpDocTemp = {
-    'log': '''跑团日志记录
+    'log': """跑团日志记录
 .log on (名字) 开始记录日志
 .log off (名字) 暂停记录指定日志或当前日志
 .log end (名字) 完成记录并发送日志文件
@@ -147,13 +139,11 @@ dictHelpDocTemp = {
     不带参数查看当前活跃日志中自己的数据
 
 日志的默认名称为 default
-日志上传存在失败可能，届时请联系后台管理索取''',
-
-    'OlivaDiceLogger': '''[OlivaDiceLogger]
+日志上传存在失败可能，届时请联系后台管理索取""",
+    'OlivaDiceLogger': """[OlivaDiceLogger]
 OlivaDice日志模块
 本模块为青果跑团掷骰机器人(OlivaDice)跑团日志模块，集成与跑团相关的跑团日志记录功能。
 核心开发者: lunzhiPenxil仑质
-注: 本模块为可选重要模块。''',
-
-    '日志': '&log'
+注: 本模块为可选重要模块。""",
+    '日志': '&log',
 }
