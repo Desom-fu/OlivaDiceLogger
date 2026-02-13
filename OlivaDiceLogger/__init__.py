@@ -15,10 +15,10 @@ _  / / /_  /  __  / __ | / /__  /| |_  / / /__  / _  /    __  __/
 '''
 
 import OlivaDiceCore
-import OlivaDiceLogger.main
-import OlivaDiceLogger.msgReply
-import OlivaDiceLogger.msgCustom
-import OlivaDiceLogger.msgCustomManager
-import OlivaDiceLogger.data
-import OlivaDiceLogger.userConfig
-import OlivaDiceLogger.logger
+from . import main
+from . import msgReply
+from . import msgCustom
+from . import msgCustomManager
+from . import data
+from . import userConfig
+from . import logger
