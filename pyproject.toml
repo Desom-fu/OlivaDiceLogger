@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=63.2.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "olivos-plugin-OlivaDiceLogger"
+version = "3.0.31"
+description = "本模块为OlivaDice的日志模块，提供了跑团日志记录器，它可以在跑团过程中对日志进行记录，并由结果生成跑团日志，与在线的跑团日志渲染器进行联动、或发送日志邮件。"
+readme = "README.md"
+requires-python = ">=3.7"
+authors = [
+    {name = "OlivOS-Team", email = "benzenpenxil@foxmail.com"}
+]
+license = {text = "AGPLv3 License"}
+classifiers = [
+    "License :: OSI Approved :: GNU Affero General Public License v3",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+
+dependencies = [
+    "olivos",
+]
+
+[project.urls]
+Homepage = "https://wiki.dice.center/"
+Repository = "https://github.com/OlivOS-Team/OlivaDiceCore"
+Issues = "https://github.com/OlivOS-Team/OlivaDiceCore/issues"
