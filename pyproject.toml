@@ -26,5 +26,5 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://wiki.dice.center/"
-Repository = "https://github.com/OlivOS-Team/OlivaDiceCore"
-Issues = "https://github.com/OlivOS-Team/OlivaDiceCore/issues"
+Repository = "https://github.com/OlivOS-Team/OlivaDiceLogger"
+Issues = "https://github.com/OlivOS-Team/OlivaDiceLogger/issues"
